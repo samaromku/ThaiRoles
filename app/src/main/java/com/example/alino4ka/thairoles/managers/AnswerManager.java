@@ -1,38 +1,87 @@
-package com.example.alino4ka.thairoles;
+package com.example.alino4ka.thairoles.managers;
+
+import android.util.Log;
+
+import com.example.alino4ka.thairoles.entities.Answer;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Answer {
-    private String body;
-    private String russianBody;
-    private List<Answer> answers1 = new ArrayList<>();
-    private int id = 1;
-    private int questionId;
-    private boolean isCorrect = false;
+import io.realm.Realm;
 
-    public int getQuestionId() {
-        return questionId;
+import static android.content.ContentValues.TAG;
+
+/**
+ * Created by andrey on 08.07.2017.
+ */
+
+public class AnswerManager {
+    private Realm realm;
+    public static final String QUESTION_ID = "questionId";
+    public static final String IS_RESULT = "isInResult";
+    public static final String IS_CORRECT = "isCorrect";
+
+    public AnswerManager(Realm realm){
+        this.realm = realm;
+        Log.i(TAG, "AnswerManager: answers size " + getAnswersFromRealm().size());
+        if (getAnswersFromRealm().size() == 0) {
+            addAnswersInDB();
+        }
     }
 
-    public String getBody() {
-        return body;
+    public Answer getCorrectAnswerByQuestionId(int questionId){
+        return realm
+                .where(Answer.class)
+                .equalTo(QUESTION_ID, questionId)
+                .equalTo(IS_CORRECT, true)
+                .findFirst();
     }
 
-    public List<Answer> getAnswers() {
-        return answers1;
+    private void addAnswersInDB(){
+        realm.executeTransactionAsync(realm1 -> {
+            realm1.insertOrUpdate(listWithId());
+        }, () -> {
+            Log.i(TAG, "addAnswersInDB: success");
+        }, error -> {
+            Log.i(TAG, "addAnswersInDB: " + error);
+        });
     }
 
-    public String getRussianBody() {
-        return russianBody;
+    public List<Answer> getAnswersFromRealm(){
+        return realm.where(Answer.class).findAll();
     }
 
-    public int getId() {
-        return id;
+    public List<Answer>getAnswersBuQuestionId(int questionId){
+        return realm.where(Answer.class).equalTo(QUESTION_ID, questionId).findAll();
     }
 
-    public Answer(){}
+    public List<Answer>getAnswersWithResultFlag(){
+        return realm
+                .where(Answer.class)
+                .equalTo(IS_RESULT, true)
+                .findAll();
+    }
 
-    public List<Answer> addToAnswers(){
+    public void setResultFalse(){
+        for(Answer answer: realm.where(Answer.class).equalTo(IS_RESULT, true).findAll()){
+            realm.executeTransaction(realm1 -> {
+                answer.setInResult(false);
+            });
+        }
+    }
+
+    private List<Answer>listWithId(){
+        List<Answer>listWithIds = new ArrayList<>();
+        int id = 1;
+        for(Answer a:addToAnswers()){
+            a.setId(id);
+            listWithIds.add(a);
+            id++;
+        }
+        return listWithIds;
+    }
+
+    private List<Answer> addToAnswers(){
         ArrayList<Answer> answers = new ArrayList<>();
         answers.add(new Answer(1, "May make a U-turn", "Может сделать разворот", true));
         answers.add(new Answer(1, "Stop or slow down", "Останавливается или замедляется"));
@@ -323,42 +372,11 @@ public class Answer {
         answers.add(new Answer(59, "Stop allow the pedestrians in the crosswalk to rach the other side of the street before turning right", "Остановка позволяет пешеходам на пешеходном переходе достичь другой стороны улицы до поворота направо"));
         answers.add(new Answer(59, "Turn immediately without stopping", "Поверните немедленно, не останавливаясь"));
 
-        answers.add(new Answer(60, "In an intersection", "В перекрестке", true));
-        answers.add(new Answer(60, "Within 150 meters of a bridge ", "В 150 метрах от моста"));
-        answers.add(new Answer(60, "In front of a hospital", "Перед госпиталем"));
-        answers.add(new Answer(60, "Where another vehicle is following at a distance of less than 120 meters", "Если другое транспортное средство следует на расстоянии менее 120 метров"));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        answers.add(new Answer(0, "In an intersection", "В перекрестке", true));
+        answers.add(new Answer(0, "Within 150 meters of a bridge ", "В 150 метрах от моста"));
+        answers.add(new Answer(0, "In front of a hospital", "Перед госпиталем"));
+        answers.add(new Answer(0, "Where another vehicle is following at a distance of less than 120 meters", "Если другое транспортное средство следует на расстоянии менее 120 метров"));
         return answers;
     }
 
-    public Answer(int questionId, String body, String russianBody){
-        this.questionId = questionId;
-        this.body = body;
-        this.russianBody= russianBody;
-    }
-
-    public Answer(int questionId, String body, String russianBody, boolean isCorrect){
-        this.questionId = questionId;
-        this.body = body;
-        this.russianBody= russianBody;
-        this.isCorrect = isCorrect;
-    }
-
-
 }
-

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.example.alino4ka.thairoles.activities.QuestionsActivity"
+    android:layout_margin="8dp"
+    android:padding="8dp"
+    android:id="@+id/llQuestion">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/question_text"
+        tools:text="Кто убил кролика роджера?"
+        android:textSize="20sp"
+        android:layout_marginBottom="8dp"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rgAnswerVariants"
+        android:layout_marginBottom="8dp">
+
+        <RadioButton
+            android:layout_margin="4dp"
+            android:id="@+id/firstAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Я"/>
+
+        <RadioButton
+            android:layout_margin="4dp"
+            android:id="@+id/secondAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="ТЫ"/>
+
+        <RadioButton
+            android:layout_margin="4dp"
+            android:id="@+id/thirdAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="ОН"/>
+
+        <RadioButton
+            android:layout_margin="4dp"
+            android:id="@+id/fourthAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="ОНА"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/btnPrevious"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/previous_answer"/>
+
+        <Button
+            android:id="@+id/btnForward"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/next_answer"/>
+
+
+        <Button
+            android:id="@+id/btnMakeAnswer"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/make_answer"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_gravity="clip_vertical">
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/number_question"-->
+            <!--android:text="@string/number_question"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginStart="4dp"-->
+            <!--android:layout_marginLeft="4dp" />-->
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="end"
+            android:id="@+id/scChangeLang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/russian"
+            android:textOff="@string/rus"
+            android:textOn="@string/ang"
+            app:showText="false"
+            android:theme="@style/MySwitch" />
+
+    </FrameLayout>
+
+
+</LinearLayout>

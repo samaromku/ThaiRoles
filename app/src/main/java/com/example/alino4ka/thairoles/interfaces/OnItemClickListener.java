@@ -1,4 +1,4 @@
-package com.example.alino4ka.thairoles;
+package com.example.alino4ka.thairoles.interfaces;
 
 
 import android.view.View;

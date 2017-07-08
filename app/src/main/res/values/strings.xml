@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">ThaiRoles</string>
     <string name="next">Следующий</string>
+    <string name="next_answer">Вперед</string>
+    <string name="previous_answer">Назад</string>
+    <string name="make_answer">Ответить</string>
+    <string name="english">Английский</string>
+    <string name="russian">Русский</string>
+    <string name="rus">Рус</string>
+    <string name="ang">Анг</string>
+    <string name="number_question">Вопрос №</string>
+    <string name="congratulations">Поздравляем, вы прошли</string>
 </resources>

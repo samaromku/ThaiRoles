@@ -1,12 +1,18 @@
-package com.example.alino4ka.thairoles;
+package com.example.alino4ka.thairoles.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.alino4ka.thairoles.interfaces.OnItemClickListener;
+import com.example.alino4ka.thairoles.R;
+
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupHolder> {
     private List<String> groups;
@@ -15,10 +21,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupHolder>
     public GroupAdapter(List<String>groups , OnItemClickListener clickListener){
         this.groups = groups;
         this.clickListener = clickListener;
-        System.out.println(clickListener);
     }
-
-
 
     @Override
     public GroupHolder onCreateViewHolder (ViewGroup parent, int viewType) {
@@ -37,15 +40,16 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupHolder>
         return groups.size();
     }
 
-    public class GroupHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView title;
+    class GroupHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        TextView title;
 
-        public GroupHolder(View itemView) {
+        GroupHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
+            itemView.setOnClickListener(this);
         }
 
-        public void bind(String group){
+        void bind(String group){
             title.setText(group);
         }
 
